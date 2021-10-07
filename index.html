@@ -12,22 +12,31 @@
   <form id= "transactionForm">
     <div class="formField">
         Tipo de Transaccion
-      <input id= "ingreso" type="radio" name="transactionType" value="ing">
-      <label for="ingreso">Ingreso</label>
-      <input id= "Egreso" type="radio" name="transactionType" value="egr">
-      <label for="Egreso">Egreso</label>
+      <input id= "FrontEnd" type="radio" name="transactionType" value="FRONT">
+      <label for="FrontEnd">FrontEnd</label>
+      <input id= "BackEnd" type="radio" name="transactionType" value="BACK">
+      <label for="BackEnd">BackEnd</label>
+    </div>
+    <div class="formField">
+      <label for="transactionName">Nombre</label> 
+      <input id="transactionName" name="transactionName">
+    </div>
+    <div class="formField">
+      <label for="transactionLastName">Apellido</label> 
+      <input id="transactionLastName" name="transactionLastName">
     </div>
     <div class="formField">
       <label for="transactionDescription">Descripcion</label> 
       <input id="transactionDescription" name="transactionDescription">
     </div>
     <div class="formField">
-      <label for="transactionAmount">Amount</label> 
-      <input id="transactionAmount" name="transactionAmount" type="number">
+      <label for="transactionAmount">Salario</label> 
+      <input id="transactionAmount" name="transactionAmount">
     </div>
+
     <div class="formField">
-      <label for="transactionCategory">Categoria</label> 
-      <input id="transactionCategory" name="transactionCategory">
+      <label for="transactionLink">Linkedin</label> 
+      <input id="transactionLink" name="transactionLink">
     </div>
     <div class="formField">
     <button id="botonDeEnvio"> Anadir</button>
@@ -37,29 +46,39 @@
   <table id="transactionTable">
     <tr>
         <th>
-          Tipo
+          Area
+        </th>
+        <th>
+          Nombre
+        </th>
+        <th>
+          Apellido
         </th>
         <th>
           Descripcion
         </th>
         <th>
-          Monto
+          Salario
         </th>
         <th>
-          Categoria
+          Linkedin
         </th>
     </tr>
     <tr>
-      <td>Tienda</td>
-      <td>Sueldo</td>
-      <td>1000</td>
-      <td>Trabajo</td>
+      <td>Back</td>
+      <td>Brayan</td>
+      <td>Sanchez</td>
+      <td>practicando</td>
+      <td>SueldoMinimoxd</td>
+      <td>wwlinkssss</td>
     </tr>
     <tr>
-      <td>Egreso</td>
-      <td>Big Mac</td>
-      <td>7</td>
-      <td>Comida</td>
+      <td>FRONT</td>
+      <td>Brayan2</td>
+      <td>practicando2</td>
+      <td>Sanchez2</td>
+      <td>SueldoMinimoxd2</td>
+      <td>wwlinkssss2</td>
     </tr>
   </table>
 </div>
@@ -78,17 +97,22 @@
       let newTransactionRowRef = transactionTableRef.insertRow(-1);
 
       let newTypeCellRef = newTransactionRowRef.insertCell(0)
-
       newTypeCellRef.textContent = transactionFormData.get("transactionType");
-
+      
       newTypeCellRef = newTransactionRowRef.insertCell(1)
-      newTypeCellRef.textContent = transactionFormData.get("transactionDescription");
+      newTypeCellRef.textContent = transactionFormData.get("transactionName");
 
       newTypeCellRef = newTransactionRowRef.insertCell(2)
-      newTypeCellRef.textContent = transactionFormData.get("transactionAmount");
+      newTypeCellRef.textContent = transactionFormData.get("transactionLastName");
 
       newTypeCellRef = newTransactionRowRef.insertCell(3)
-      newTypeCellRef.textContent = transactionFormData.get("transactionCategory");
+      newTypeCellRef.textContent = transactionFormData.get("transactionDescription");
+      
+      newTypeCellRef = newTransactionRowRef.insertCell(4)
+      newTypeCellRef.textContent = transactionFormData.get("transactionAmount");
+
+      newTypeCellRef = newTransactionRowRef.insertCell(5)
+      newTypeCellRef.textContent = transactionFormData.get("transactionLink");
   }
 </script>
 
