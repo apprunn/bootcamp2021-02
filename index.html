@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Mi Economia</title>
+
+</head>
+<body>
+  
+  <h1>Mi Economia</h1>
+  <form id= "transactionForm">
+    <div class="formField">
+        Tipo de Transaccion
+      <input id= "ingreso" type="radio" name="transactionType" value="ing">
+      <label for="ingreso">Ingreso</label>
+      <input id= "Egreso" type="radio" name="transactionType" value="egr">
+      <label for="Egreso">Egreso</label>
+    </div>
+    <div class="formField">
+      <label for="transactionDescription">Descripcion</label> 
+      <input id="transactionDescription" name="transactionDescription">
+    </div>
+    <div class="formField">
+      <label for="transactionAmount">Amount</label> 
+      <input id="transactionAmount" name="transactionAmount" type="number">
+    </div>
+    <div class="formField">
+      <label for="transactionCategory">Categoria</label> 
+      <input id="transactionCategory" name="transactionCategory">
+    </div>
+    <div class="formField">
+    <button id="botonDeEnvio"> Anadir</button>
+    </div>
+  </form>
+<div class="tableFormat">
+  <table id="transactionTable">
+    <tr>
+        <th>
+          Tipo
+        </th>
+        <th>
+          Descripcion
+        </th>
+        <th>
+          Monto
+        </th>
+        <th>
+          Categoria
+        </th>
+    </tr>
+    <tr>
+      <td>Tienda</td>
+      <td>Sueldo</td>
+      <td>1000</td>
+      <td>Trabajo</td>
+    </tr>
+    <tr>
+      <td>Egreso</td>
+      <td>Big Mac</td>
+      <td>7</td>
+      <td>Comida</td>
+    </tr>
+  </table>
+</div>
+
+<script>
+  const form = document.getElementById("transactionForm")
+  form.addEventListener("submit", function(event){
+    event.preventDefault();
+    let transactionFormData = new FormData(form);
+    insertRowInTransactionTable(transactionFormData);
+  })
+
+  function insertRowInTransactionTable(transactionFormData) {
+      let transactionTableRef = document.getElementById("transactionTable");
+
+      let newTransactionRowRef = transactionTableRef.insertRow(-1);
+
+      let newTypeCellRef = newTransactionRowRef.insertCell(0)
+
+      newTypeCellRef.textContent = transactionFormData.get("transactionType");
+
+      newTypeCellRef = newTransactionRowRef.insertCell(1)
+      newTypeCellRef.textContent = transactionFormData.get("transactionDescription");
+
+      newTypeCellRef = newTransactionRowRef.insertCell(2)
+      newTypeCellRef.textContent = transactionFormData.get("transactionAmount");
+
+      newTypeCellRef = newTransactionRowRef.insertCell(3)
+      newTypeCellRef.textContent = transactionFormData.get("transactionCategory");
+  }
+</script>
+
+  <style>
+    th, td {
+      text-align: center;
+      padding: 10px;
+      border: solid black 1px;
+    }
+    .tableFormat table {
+      margin: 0 auto;
+    }
+    /* td {
+      border: solid red 1px;
+    } */
+    h1 {
+      text-align: center;
+    }
+    form {
+      text-align: center;
+    }
+    .formField {
+      background-color: wheat;
+      padding-bottom: 20px;
+    }
+    #botonDeEnvio {
+      font-size: 23px;
+    }
+  </style>
+</body>
+</html>
