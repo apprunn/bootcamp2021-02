@@ -3,15 +3,15 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Mi Economia</title>
+  <title>Empleado</title>
 
 </head>
 <body>
   
-  <h1>Mi Economia</h1>
+  <h1>Empleado</h1>
   <form id= "transactionForm">
     <div class="formField">
-        Tipo de Transaccion
+        Tabla Empleado
       <input id= "FrontEnd" type="radio" name="transactionType" value="FRONT">
       <label for="FrontEnd">FrontEnd</label>
       <input id= "BackEnd" type="radio" name="transactionType" value="BACK">
@@ -44,7 +44,7 @@
   </form>
 <div class="tableFormat">
   <table id="transactionTable">
-    <tr>
+    <tr data-transaction-id="">
         <th>
           Area
         </th>
@@ -62,6 +62,12 @@
         </th>
         <th>
           Linkedin
+        </th>
+        <th>
+          Eliminar
+        </th>
+        <th>
+          Ver
         </th>
     </tr>
     <tr>
@@ -88,32 +94,127 @@
   form.addEventListener("submit", function(event){
     event.preventDefault();
     let transactionFormData = new FormData(form);
-    insertRowInTransactionTable(transactionFormData);
+    let transactionObj = convertFormDataToTransactionObj(transactionFormData)
+    console.log(transactionObj);
+    insertRowInTransactionTable(transactionObj);
+    saveTransactionObj(transactionObj);
+    form.reset();
   })
 
-  function insertRowInTransactionTable(transactionFormData) {
+  document.addEventListener("DOMContentLoaded", function(event){
+    let transactionObjArr = JSON.parse(localStorage.getItem("transactionData"));
+    transactionObjArr.forEach(function(arrayElement){
+      insertRowInTransactionTable(arrayElement)
+      console.log("se inserta el elemento");
+    });
+  })
+
+  function getNewTransactionId(){
+    let lastTransactionId = localStorage.getItem("lastTransactionId") || "-1";
+    let newTransactionId = JSON.parse(lastTransactionId) + 1;
+    localStorage.setItem("lastTransactionId", JSON.stringify(newTransactionId));
+    return newTransactionId;
+  }
+
+  function convertFormDataToTransactionObj(transactionFormData) {
+    let transactionType = transactionFormData.get("transactionType")
+    let transactionName = transactionFormData.get("transactionName")
+    let transactionLastName = transactionFormData.get("transactionLastName")
+    let transactionDescription = transactionFormData.get("transactionDescription")
+    let transactionAmount = transactionFormData.get("transactionAmount")
+    let transactionLink = transactionFormData.get("transactionLink")
+    let transactionId = getNewTransactionId();
+    return {
+      "transactionType": transactionType,
+      "transactionName": transactionName,
+      "transactionLastName": transactionLastName,
+      "transactionDescription": transactionDescription,
+      "transactionAmount": transactionAmount, 
+      "transactionLink": transactionLink,
+      "transactionId": transactionId
+    }
+  }
+
+  function insertRowInTransactionTable(transactionObj) {
       let transactionTableRef = document.getElementById("transactionTable");
 
       let newTransactionRowRef = transactionTableRef.insertRow(-1);
-
+      newTransactionRowRef.setAttribute("transactionId", transactionObj["transactionId"])
       let newTypeCellRef = newTransactionRowRef.insertCell(0)
-      newTypeCellRef.textContent = transactionFormData.get("transactionType");
+      newTypeCellRef.textContent = transactionObj["transactionType"];
       
       newTypeCellRef = newTransactionRowRef.insertCell(1)
-      newTypeCellRef.textContent = transactionFormData.get("transactionName");
+      newTypeCellRef.textContent = transactionObj["transactionName"];
 
       newTypeCellRef = newTransactionRowRef.insertCell(2)
-      newTypeCellRef.textContent = transactionFormData.get("transactionLastName");
+      newTypeCellRef.textContent = transactionObj["transactionLastName"];
 
       newTypeCellRef = newTransactionRowRef.insertCell(3)
-      newTypeCellRef.textContent = transactionFormData.get("transactionDescription");
+      newTypeCellRef.textContent = transactionObj["transactionDescription"];
       
       newTypeCellRef = newTransactionRowRef.insertCell(4)
-      newTypeCellRef.textContent = transactionFormData.get("transactionAmount");
+      newTypeCellRef.textContent = transactionObj["transactionAmount"];
 
       newTypeCellRef = newTransactionRowRef.insertCell(5)
-      newTypeCellRef.textContent = transactionFormData.get("transactionLink");
+      newTypeCellRef.textContent = transactionObj["transactionLink"];
+//
+      let newDeleteCell = newTransactionRowRef.insertCell(6);
+      let deleteButton = document.createElement("button");
+      deleteButton.textContent = "Eliminar";
+      newDeleteCell.appendChild(deleteButton);
+
+      deleteButton.addEventListener("click", (event) => {
+        let transactionRow = event.target.parentNode.parentNode;
+        let transactionId = transactionRow.getAttribute("data-transaction-id");
+        transactionRow.remove();
+        deleteTransactionObj(transactionId);
+      })
+//
+//
+      let newSelectCell = newTransactionRowRef.insertCell(7);
+      let selectButton = document.createElement("button");
+      selectButton.textContent = "Ver";
+      newSelectCell.appendChild(selectButton);
+
+      selectButton.addEventListener("click", (event) => {
+        let transactionRow = event.target.parentNode.parentNode;
+        let transactionId = transactionRow.getAttribute("data-transaction-id");
+        getDetailObj(transactionId);
+      })
+    //
   }
+  function getDetailObj(transactionId) {
+    let transactionDetailObj = JSON.parse(localStorage.getItem("transactionData"));
+    console.log(transactionId);
+    const transactDetail = transactionDetailObj.find(element => element.transactionId === transactionId);
+    // transactionObjArr.splice(transactionIndexInArray, 1);
+    // //convierto de objeto a json
+    // let transactionObjJson = JSON.stringify(transactionObjArr);
+      console.log(JSON.stringify(transactDetail));
+    // alert(transactionObjJson);
+  }
+  // le paso como parametro el transactionId de la transaccion que quiero eliminar
+  function deleteTransactionObj(transactionId){
+    console.log(transactionId);
+    //obtengo las transaccion de mi base de datos o en este caso el localstorage
+    let transactionObjArr = JSON.parse(localStorage.getItem("transactionData"));
+    //busco el indice o la posicion de la transaccion que quiero eliminar
+    let transactionIndexInArray = transactionObjArr.findIndex(element => element.transactionId === transactionId);
+    //elimino el elemento de esa posicion
+    transactionObjArr.splice(transactionIndexInArray, 1);
+    //convierto de objeto a json
+    let transactionObjJson = JSON.stringify(transactionObjArr);
+    // y finalmente guardo el array de la transaccion con formato JSon al localstorage
+  localStorage.setItem("transactionData", transactionObjJson);
+  }
+
+  function saveTransactionObj(transactionObj) {
+  let myTransactionArray = JSON.parse(localStorage.getItem("transactionData")) || [];
+    myTransactionArray.push(transactionObj);
+  let transactionObjJson = JSON.stringify(myTransactionArray);
+  localStorage.setItem("transactionData", transactionObjJson);
+
+}
 </script>
 
   <style>
