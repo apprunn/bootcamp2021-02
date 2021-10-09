@@ -11,7 +11,6 @@
   <h1>Empleado</h1>
   <form id= "transactionForm">
     <div class="formField">
-        Tabla Empleado
       <input id= "FrontEnd" type="radio" name="transactionType" value="FRONT">
       <label for="FrontEnd">FrontEnd</label>
       <input id= "BackEnd" type="radio" name="transactionType" value="BACK">
@@ -39,7 +38,7 @@
       <input id="transactionLink" name="transactionLink">
     </div>
     <div class="formField">
-    <button id="botonDeEnvio"> Anadir</button>
+    <button id="botonDeEnvio"> Agregar</button>
     </div>
   </form>
 <div class="tableFormat">
@@ -178,24 +177,32 @@
 
       selectButton.addEventListener("click", (event) => {
         let transactionRow = event.target.parentNode.parentNode;
-        let transactionId = transactionRow.getAttribute("data-transaction-id");
+        let transactionId = transactionRow.getAttribute("transactionid");
+            console.log(transactionId);
         getDetailObj(transactionId);
       })
     //
   }
   function getDetailObj(transactionId) {
     let transactionDetailObj = JSON.parse(localStorage.getItem("transactionData"));
-    console.log(transactionId);
-    const transactDetail = transactionDetailObj.find(element => element.transactionId === transactionId);
+    // console.log(transactionDetailObj);
+    console.log(JSON.parse(transactionId));
+    const transactDetail = transactionDetailObj.find(p => p.transactionId === JSON.parse(transactionId));
     // transactionObjArr.splice(transactionIndexInArray, 1);
     // //convierto de objeto a json
-    // let transactionObjJson = JSON.stringify(transactionObjArr);
-      console.log(JSON.stringify(transactDetail));
-    // alert(transactionObjJson);
+    // let transactionObjJson = JSON.stringify(transactDetail);
+      // console.log(transactDetail);
+    alert(JSON.stringify(`
+    Codigo: ${transactDetail.transactionId},
+    Area: ${transactDetail.transactionType}, 
+    Nombre: ${Nombre = transactDetail.transactionName},
+    Descripcion: ${Nombre = transactDetail.transactionDescription},
+    Saloario: ${Nombre = transactDetail.transactionAmount},
+    Lnkend: ${Nombre = transactDetail.transactionLink}`
+    ));
   }
   // le paso como parametro el transactionId de la transaccion que quiero eliminar
   function deleteTransactionObj(transactionId){
-    console.log(transactionId);
     //obtengo las transaccion de mi base de datos o en este caso el localstorage
     let transactionObjArr = JSON.parse(localStorage.getItem("transactionData"));
     //busco el indice o la posicion de la transaccion que quiero eliminar
@@ -236,7 +243,6 @@
       text-align: center;
     }
     .formField {
-      background-color: wheat;
       padding-bottom: 20px;
     }
     #botonDeEnvio {
