@@ -20,7 +20,7 @@ import data from './dataModel.json' assert { type: "json" };
             delBtn.setAttribute('record-id', index);
             updBtn.setAttribute('record-id', index);
             delBtn.innerHTML = "Eliminar"
-            updBtn.innerHTML = "Actualizar"
+            updBtn.innerHTML = "Ver"
             for (const property in element) {
                 let cell = document.createElement('td');
                 cell.innerHTML = element[property];
@@ -60,14 +60,30 @@ import data from './dataModel.json' assert { type: "json" };
         document.getElementById('name').value = dataSelected.name;
         document.getElementById('age').value = dataSelected.age;
         document.getElementById('job').value = dataSelected.job;
-        document.getElementById('salary').value = dataSelected.Salary;
+        document.getElementById('salary').value = dataSelected.salary;
     }
+
+
+    const update = (index, data) => {
+        dataFromDB[index] = data;
+        localStorage.setItem('dataJson', JSON.stringify(dataFromDB));
+        form.reset();
+    }
+
+
 
     document.querySelector('#createBtn').addEventListener('click', (e) => {
         e.preventDefault();
         create(dataFromForm());
         loadTable(dataFromDB);
     });
+
+    document.querySelector('#updateBtn').addEventListener('click', (e) => {
+        e.preventDefault();
+        let record = document.querySelector('#updateBtn').getAttribute('record');
+        update(record, dataFromForm());
+        loadTable(dataFromDB);
+    })
 
     tabla.addEventListener('click', function(e){
         let event = e.target;
@@ -78,6 +94,7 @@ import data from './dataModel.json' assert { type: "json" };
                 erase(record);
             }else if (action === 'update'){
                 getData(record);
+                document.querySelector('#updateBtn').setAttribute('record', record);
             }
         };
         loadTable(dataFromDB);

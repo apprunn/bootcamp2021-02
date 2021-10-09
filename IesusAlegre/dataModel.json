@@ -2,28 +2,28 @@
     "name": "Iesus",
     "age": 25,
     "job": "backend",
-    "Salary": 1200
+    "salary": 1200
 },
 {
     "name": "Brayan",
     "age": 23,
     "job": "backend",
-    "Salary": 1200
+    "salary": 1200
 },
 {
     "name": "Marcelo",
     "age": 28,
     "job": "Administrador",
-    "Salary": 1200
+    "salary": 1200
 },
 {
     "name": "Luis",
     "age": 30,
     "job": "DevOps",
-    "Salary": 1200
+    "salary": 1200
 },{
     "name": "Wendy",
     "age": 25,
     "job": "CTO",
-    "Salary": 1200
+    "salary": 1200
 }]
