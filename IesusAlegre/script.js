@@ -43,23 +43,24 @@ import data from './dataModel.json' assert { type: "json" };
         const salary = document.getElementById('salary');
         return {name: name.value, age: age.value, job: job.value, salary: salary.value};
     }
-
-    function clearForm() {
-        document.getElementById('name').value = '';
-        document.getElementById('age').value = '';
-        document.getElementById('job').value = '';
-        document.getElementById('salary').value = '';
-    }
-
+    
     const create = (data) => {
         dataFromDB.push(data);
         localStorage.setItem('dataJson', JSON.stringify(dataFromDB));
-        clearForm();
+        form.reset();
     }
 
     const erase = (index) => {
         dataFromDB.splice(index,1);
         localStorage.setItem('dataJson', JSON.stringify(dataFromDB));
+    }
+
+    const getData = (index) => {
+        let dataSelected = dataFromDB[index];
+        document.getElementById('name').value = dataSelected.name;
+        document.getElementById('age').value = dataSelected.age;
+        document.getElementById('job').value = dataSelected.job;
+        document.getElementById('salary').value = dataSelected.Salary;
     }
 
     document.querySelector('#createBtn').addEventListener('click', (e) => {
@@ -76,7 +77,7 @@ import data from './dataModel.json' assert { type: "json" };
             if(action === 'delete'){
                 erase(record);
             }else if (action === 'update'){
-                console.log(dataFromDB[record]);
+                getData(record);
             }
         };
         loadTable(dataFromDB);
