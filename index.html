@@ -11,6 +11,10 @@
   <h1>Empleado</h1>
   <form id= "transactionForm">
     <div class="formField">
+      <label for="transactionCode">Codigo</label> 
+      <input id="transactionCode" name="transactionCode">
+    </div>
+    <div class="formField">
       <input id= "FrontEnd" type="radio" name="transactionType" value="FRONT">
       <label for="FrontEnd">FrontEnd</label>
       <input id= "BackEnd" type="radio" name="transactionType" value="BACK">
@@ -38,7 +42,7 @@
       <input id="transactionLink" name="transactionLink">
     </div>
     <div class="formField">
-    <button id="botonDeEnvio"> Agregar</button>
+    <button id="botonDeEnvio" onclick="location.reload()"> Grabar</button>
     </div>
   </form>
 <div class="tableFormat">
@@ -69,22 +73,6 @@
           Ver
         </th>
     </tr>
-    <tr>
-      <td>Back</td>
-      <td>Brayan</td>
-      <td>Sanchez</td>
-      <td>practicando</td>
-      <td>SueldoMinimoxd</td>
-      <td>wwlinkssss</td>
-    </tr>
-    <tr>
-      <td>FRONT</td>
-      <td>Brayan2</td>
-      <td>practicando2</td>
-      <td>Sanchez2</td>
-      <td>SueldoMinimoxd2</td>
-      <td>wwlinkssss2</td>
-    </tr>
   </table>
 </div>
 
@@ -94,14 +82,13 @@
     event.preventDefault();
     let transactionFormData = new FormData(form);
     let transactionObj = convertFormDataToTransactionObj(transactionFormData)
-    console.log(transactionObj);
     insertRowInTransactionTable(transactionObj);
     saveTransactionObj(transactionObj);
     form.reset();
   })
 
   document.addEventListener("DOMContentLoaded", function(event){
-    let transactionObjArr = JSON.parse(localStorage.getItem("transactionData"));
+    let transactionObjArr = JSON.parse(localStorage.getItem("transactionData")) || [];
     transactionObjArr.forEach(function(arrayElement){
       insertRowInTransactionTable(arrayElement)
       console.log("se inserta el elemento");
@@ -122,7 +109,9 @@
     let transactionDescription = transactionFormData.get("transactionDescription")
     let transactionAmount = transactionFormData.get("transactionAmount")
     let transactionLink = transactionFormData.get("transactionLink")
+    let transactionCode = transactionFormData.get("transactionCode")  || null
     let transactionId = getNewTransactionId();
+    
     return {
       "transactionType": transactionType,
       "transactionName": transactionName,
@@ -130,7 +119,7 @@
       "transactionDescription": transactionDescription,
       "transactionAmount": transactionAmount, 
       "transactionLink": transactionLink,
-      "transactionId": transactionId
+      "transactionId": JSON.parse(transactionCode) || transactionId,
     }
   }
 
@@ -156,7 +145,7 @@
 
       newTypeCellRef = newTransactionRowRef.insertCell(5)
       newTypeCellRef.textContent = transactionObj["transactionLink"];
-//
+
       let newDeleteCell = newTransactionRowRef.insertCell(6);
       let deleteButton = document.createElement("button");
       deleteButton.textContent = "Eliminar";
@@ -168,8 +157,7 @@
         transactionRow.remove();
         deleteTransactionObj(transactionId);
       })
-//
-//
+
       let newSelectCell = newTransactionRowRef.insertCell(7);
       let selectButton = document.createElement("button");
       selectButton.textContent = "Ver";
@@ -181,26 +169,21 @@
             console.log(transactionId);
         getDetailObj(transactionId);
       })
-    //
   }
+
   function getDetailObj(transactionId) {
     let transactionDetailObj = JSON.parse(localStorage.getItem("transactionData"));
-    // console.log(transactionDetailObj);
-    console.log(JSON.parse(transactionId));
     const transactDetail = transactionDetailObj.find(p => p.transactionId === JSON.parse(transactionId));
-    // transactionObjArr.splice(transactionIndexInArray, 1);
-    // //convierto de objeto a json
-    // let transactionObjJson = JSON.stringify(transactDetail);
-      // console.log(transactDetail);
-    alert(JSON.stringify(`
-    Codigo: ${transactDetail.transactionId},
-    Area: ${transactDetail.transactionType}, 
-    Nombre: ${transactDetail.transactionName},
-    Descripcion: ${transactDetail.transactionDescription},
-    Saloario: ${transactDetail.transactionAmount},
-    Lnkend: ${transactDetail.transactionLink}`
-    ));
+
+    document.querySelector("#transactionCode").value = transactDetail.transactionId;
+    document.querySelector("#transactionName").value = transactDetail.transactionName;
+    document.querySelector("#transactionLastName").value = transactDetail.transactionLastName;
+    document.querySelector("#transactionDescription").value = transactDetail.transactionDescription;
+    document.querySelector("#transactionAmount").value = transactDetail.transactionAmount;
+    document.querySelector("#transactionLink").value = transactDetail.transactionLink;
   }
+
+
   // le paso como parametro el transactionId de la transaccion que quiero eliminar
   function deleteTransactionObj(transactionId){
     //obtengo las transaccion de mi base de datos o en este caso el localstorage
@@ -217,10 +200,21 @@
 
   function saveTransactionObj(transactionObj) {
   let myTransactionArray = JSON.parse(localStorage.getItem("transactionData")) || [];
-    myTransactionArray.push(transactionObj);
+  const data = myTransactionArray.find(i => i.transactionId === transactionObj.transactionId);
+if (data) {
+  myTransactionArray.map(item => {
+    let newItem = item;
+    if (newItem.transactionId === transactionObj.transactionId) {
+            newItem = Object.assign(newItem, transactionObj);
+    }
+    return newItem;
+  })
+} else {
+  myTransactionArray.push(transactionObj);
+}
   let transactionObjJson = JSON.stringify(myTransactionArray);
   localStorage.setItem("transactionData", transactionObjJson);
-
+  form.reset();
 }
 </script>
 
