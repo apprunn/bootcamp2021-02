@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TAREA AXIOS</title>
+    <style>
+        #loading {
+          display: none;
+        }
+        
+        .pokemon {
+          float: left;
+          width: 49%;
+        }
+
+        .evolucion {
+          float: right;
+          width: 49%;
+        }
+
+        .principal, .loadData {
+          margin: 0 auto;
+          width: 80%;
+        }
+
+        #tblData {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            padding: 4px;
+        }
+        
+        #tblData td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        #tblData tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        #tblDataEvo {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+            padding: 4px;
+        }
+        
+        #tblDataEvo td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        #tblDataEvo tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        #busqueda {
+          font-family: arial, sans-serif;
+          width: 84%;
+          padding: 4px;
+        }
+
+        #json_get {
+            font-family: arial, sans-serif;
+            width: 14%;
+            text-align: center;
+            background-color: #4fc812;
+            padding: 4px;
+        }
+
+      </style>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="principal">
+    <h2>
+      POKEMON Y SU EVOLUCIÓN
+    </h2>
+    <div class="pokemon">
+      <table border="1" class="table" id="tblData">
+        <tr>
+            <th>Nombre</th>
+            <th>Imagen</th>
+        </tr>
+      </table>
+    </div>
+    <div class="evolucion">
+      <table border="1" class="table" id="tblDataEvo">
+        <tr>
+            <th>Nombre</th>
+            <th>Imagen</th>
+        </tr>
+      </table>
+    </div>
+    <div><h2>BUSQUEDA POR NOMBRE DE POKEMON</h2></div>
+    <div>
+      <input type="text" id="busqueda">
+      <button id="json_get" onclick="getPokemon()">BUSCAR</button> 
+    </div>
+    <div class="loadData">
+        <div id="mensaje"></div>
+        <div id="nombre"></div>
+        <div id="loading">cargando...</div>
+    </div>
+  </div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="jsAxios.js"></script>
+</html>
