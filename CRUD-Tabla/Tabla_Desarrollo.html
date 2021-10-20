@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        #tblData {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        #tblData td, th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        
+        #tblData tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+
+        #tblModif {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 50%;
+        }
+
+        #tblModif td, th {
+            text-align: left;
+            padding: 4px;
+        }
+
+        #tblModif td input {
+            font-family: arial, sans-serif;
+            width: 75%;
+            text-align: left;
+            padding: 4px;
+        }
+
+        #btnAdd {
+            font-family: arial, sans-serif;
+            width: 100%;
+            text-align: center;
+            background-color: #4fc812;
+            padding: 4px;
+        }
+
+        #btnUpdate {
+            font-family: arial, sans-serif;
+            width: 100%;
+            text-align: center;
+            background-color: #0f9ad6;
+            padding: 4px;
+        }
+
+        #btnClear {
+            font-family: arial, sans-serif;
+            width: 75%;
+            text-align: center;
+            background-color: #d12a10;
+            padding: 4px;
+        }
+
+        #btnView {
+            font-family: arial, sans-serif;
+            width: 100%;
+            text-align: center;
+            background-color: #4fc812;
+            padding: 4px;
+        }
+
+        #btnEdit {
+            font-family: arial, sans-serif;
+            width: 100%;
+            text-align: center;
+            background-color: #0f9ad6;
+            padding: 4px;
+        }
+
+        #btnDelete {
+            font-family: arial, sans-serif;
+            width: 100%;
+            text-align: center;
+            background-color: #d12a10;
+            padding: 4px;
+        }
+    </style>
+    <title>DESARROLLO</title>
+</head>
+<body>
+    <div>
+        <h2>REGISTRO DE DATOS</h2>
+        <input type="hidden" id="hfRowIndex" value="" />
+        <table class="table" id="tblModif">
+            <tr>
+                <th>USER GITHUB:</th>
+                <td>
+                    <input type="text" name="User" id="txtUser" value="" />
+                </td>
+            </tr>
+            <tr>
+                <th>ESPECIALIDAD:</th>
+                <td>
+                    <input type="text" name="Especialidad" id="txtEspecialidad" value="" />
+                </td>
+            </tr>
+            <tr>
+                <th>NACIONALIDAD:</th>
+                <td>
+                    <input type="text" name="Nacionalidad" id="txtNacionalidad" value="" />
+                </td>
+            </tr>
+            <tr>
+                <th>LINKEDIN:</th>
+                <td>
+                    <input type="url" name="Linkedin" id="txtLinkedin" value="" />
+                </td>
+            </tr>
+            <tr>
+                <th>SALARIO:</th>
+                <td>
+                    <input type="number" name="Salario" id="txtSalario" value="0.0" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button type='button' id='btnAdd' onclick="addRow()"><b>AÑADIR</b></button>
+                    <button type='button' id='btnUpdate' style="display: none;" onclick="actionUpdate()"><b>ACTUALIZAR</b></button>
+                </td>
+                <td>
+                    <button type='button' id='btnClear' onclick = "actionClear()"><b>LIMPIAR</b></button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
+        <h2>TABLA DESARROLLO</h2>
+    </div>
+    <div>
+        <table border="1" class="table" id="tblData">
+            <tr>
+                <th>USER GITHUB</th>
+                <th>ESPECIALIDAD</th>
+                <th>NACIONALIDAD</th>
+                <th>LINKEDIN</th>
+                <th>SALARIO</th>
+                <th colspan="3">ACCIONES</th>
+            </tr>
+        </table>
+    </div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script src="Acciones.js"></script>
+</html>
