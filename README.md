@@ -1,16 +1,29 @@
-# bootcamp2021-02
-JavaScript y CSS
+# trabajo 3
 
-Material: https://sumptuous-snapper-7c8.notion.site/Sintaxis-y-Manipulaci-n-del-DOM-1d39edcc81a2496683df53098bd1b5c7
+## Project setup
+```
+npm install
+```
 
-Caso práctico:
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-Desarrollar una tabla donde pueda **agregar registros, editar los valores de los registros y eliminarlos**. Estos deberán tener un mínimo de 5 columnas de datos y una de acciones (botón ver, editar / eliminar). Una de ellas debe ser del tipo URL y al dar el botón "Ver" se debe mostrar sobre la tabla los datos del registro seleccionado.
+### Compiles and minifies for production
+```
+npm run build
+```
 
-**Bonus points:**
+### Run your tests
+```
+npm run test
+```
 
-- Se hace un highlight (resalta) el registro seleccionado
-- Se logra guardar en el navegador los datos ingresados (no BD, no API)
-- La edición de registros es directamente en la fila del registro
+### Lints and fixes files
+```
+npm run lint
+```
 
-Ir a issue: https://github.com/apprunn/bootcamp2021-02/issues/1
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
